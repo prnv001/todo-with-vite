@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <style>
+      body {
+        background-color: black;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        place-items: center;
+      }
+      h1 {
+        color: white;
+      }
+      .btn {
+        font-size: 18px;
+        border-radius: 10px;
+        background-color: yellow;
+      }
+
+      input {
+        font-size: large;
+        border-radius: 5px;
+        outline: none;
+      }
+
+      .todo-lists-elem div {
+        margin-bottom: 10px;
+      }
+
+      .deleteBtn {
+        background-color: red;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+
+      .deleteBtn:hover {
+        background-color: darkred;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Todo List</h1>
+    <form>
+      <div>
+        <input type="text" id="inputValue" />
+        <button type="button" class="btn">Add Todo</button> <!-- Prevent form submission -->
+      </div>
+      <section class="todo-lists-elem"></section>
+    </form>
+    <script>
+      const mainToDoElem = document.querySelector(".todo-lists-elem");
+      const inputValue = document.getElementById("inputValue");
+
+      const addTodoList = (e) => {
+        e.preventDefault(); // Prevent form submission
+
+        const todoText = inputValue.value.trim();
+        console.log("Todo text to add:", todoText); // Debugging line
+
+        if (todoText === "") {
+          console.log("Empty todo, not adding.");
+          return; // Don't add empty todos
+        }
+
+        const divElement = document.createElement("div");
+        divElement.classList.add("main_todo_div");
+        divElement.innerHTML = `<li>${todoText}</li> <button class="deleteBtn">Delete</button>`;
+
+        console.log("Todo added:", divElement); // Debugging line
+
+        // Add delete functionality
+        const deleteBtn = divElement.querySelector(".deleteBtn");
+        deleteBtn.addEventListener("click", () => {
+          divElement.remove();
+        });
+
+        mainToDoElem.append(divElement);
+        inputValue.value = ""; // Clear input field after adding todo
+      };
+
+      // Attach event listener to the button
+      document.querySelector(".btn").addEventListener("click", (e) => {
+        addTodoList(e);
+      });
+    </script>
+  </body>
+</html>
